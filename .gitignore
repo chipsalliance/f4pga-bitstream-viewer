@@ -1,0 +1,9 @@
+dist
+venv
+nenv
+node_modules
+*.bits
+*.json
+__pycache__
+frames
+grid
