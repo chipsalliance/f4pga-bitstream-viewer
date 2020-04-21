@@ -236,8 +236,8 @@ def run_vue(input, output, frames_per_line, features_map):
         out.close()
 
 
-def bits_to_fasm(db_root, bits_file):
-    db = Database(db_root)
+def bits_to_fasm(db_root, db_part, bits_file):
+    db = Database(db_root, db_part)
     grid = db.grid()
     disassembler = fasm_disassembler.FasmDisassembler(db)
 
@@ -278,9 +278,9 @@ def bits_to_fasm(db_root, bits_file):
     return features_map_dict
 
 
-def grid_size(db_dir):
+def grid_size(db_dir, db_part):
     tilegrid = ''
-    with open(db_dir + '/tilegrid.json', 'r') as f:
+    with open(db_dir + '/' + db_part + '/tilegrid.json', 'r') as f:
         data = f.read()
         tilegrid = json.loads(data)
 
@@ -304,15 +304,15 @@ def grid_size(db_dir):
     return min_x, max_x, min_y, max_y
 
 
-def run_dump_grid(db_dir, bits, output, grid_dir):
+def run_dump_grid(db_dir, db_part, bits, output, grid_dir):
     # Calculate grid size
-    min_x, max_x, min_y, max_y = grid_size(db_dir)
+    min_x, max_x, min_y, max_y = grid_size(db_dir, db_part)
 
     # Empty grid
     grid = [[[] for j in range(min_y, max_y + 1)] for i in range(min_x, max_x + 1)]
 
     # Map features to grid
-    fmap = bits_to_fasm(db_dir, bits)
+    fmap = bits_to_fasm(db_dir, db_part, bits)
 
     for k in fmap.keys():
         for j in fmap[k].keys():
@@ -424,6 +424,10 @@ def main():
         help="Database directory",
     )
     parser.add_argument(
+        "--db-part",
+        help="Database part name",
+    )
+    parser.add_argument(
         "--vue",
         default=None,
         help='Dump in Vue.js format'
@@ -442,7 +446,7 @@ def main():
     args = parser.parse_args()
 
     if args.html or args.vue:
-        fmap = bits_to_fasm(args.db_dir, args.bits)
+        fmap = bits_to_fasm(args.db_dir, args.db_part, args.bits)
 
         if args.html:
             run(
@@ -463,6 +467,7 @@ def main():
     if args.dump_grid:
         run_dump_grid(
             db_dir=args.db_dir,
+            db_part=args.db_part,
             bits=args.bits,
             output=args.dump_grid,
             grid_dir=args.grid_dir,
