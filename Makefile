@@ -45,18 +45,19 @@ DATABASE = $(PRJXRAY)/database/artix7
 
 bitstream.bits: $(BITSTREAM)
 	$(PRJXRAY)/build/tools/bitread \
-		--part_file $(DATABASE)/$(PART).yaml \
+		--part_file $(DATABASE)/$(PART)/part.yaml \
 		-o $@ -z -y $<
 
 bitstream.frames: $(BITSTREAM)
 	$(PRJXRAY)/build/tools/bitread \
-		--part_file $(DATABASE)/$(PART).yaml \
+		--part_file $(DATABASE)/$(PART)/part.yaml \
 		-o $@ $<
 
 bitstream.html: bitstream.frames bitstream.bits
 	PYTHONPATH="$(PRJXRAY):$(PRJXRAY)/third_party/fasm:" \
 		./bithtml.py \
 		--db-dir=$(DATABASE) \
+		--db-part=$(PART) \
 		--frames-per-line=100 \
 		--frames=bitstream.frames --bits=bitstream.bits --html=bitstream.html
 
@@ -70,6 +71,7 @@ bitstreamData.json: bitstream.bits bithtml.py grid/.dir frames/.dir
 	PYTHONPATH="$(PRJXRAY):$(PRJXRAY)/third_party/fasm:" \
 		./bithtml.py \
 		--db-dir=$(DATABASE) \
+		--db-part=$(PART) \
 		--bits=bitstream.bits \
 		--dump-grid=$@ --grid-dir=$$PWD/grid
 
