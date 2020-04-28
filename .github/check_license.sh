@@ -8,7 +8,7 @@ echo
 
 ERROR_FILES=""
 FILES_TO_CHECK=`find . \
-    -size +0 -type f \( -name '*.sh' -o -name '*.py' -o -name 'Makefile' \) \
+    -size +0 -type f \( -name '*.sh' -o -name '*.py' -o -name '*.vue' -o -name 'Makefile' \) \
     \( -not -path "*/.*/*" -not -path "*/third_party/*" \)`
 
 for file in $FILES_TO_CHECK; do
