@@ -362,6 +362,7 @@ def run_dump_grid(db_dir, db_part, bits, output, grid_dir):
                 t['y'] = 1
 
                 bitfeat = []
+                i = 0
                 for b in grid[x - min_x][y - min_y]:
                     if 'feature' not in b.keys():
                         t['y'] = -1
@@ -370,10 +371,18 @@ def run_dump_grid(db_dir, db_part, bits, output, grid_dir):
                         tmp['feature'] = 'unknown'
                         bitfeat.append(tmp)
                     else:
+
+                        if bitfeat and bitfeat[-1]['feature'] is b['feature']['feature']:
+                            i += 1
+                        else:
+                            i = 0
+
                         tmp = dict()
-                        tmp['bitname'] = b['feature']['bit'][0]
+                        tmp['bitname'] = b['feature']['bit'][i]
                         tmp['feature'] = b['feature']['feature']
+
                         bitfeat.append(tmp)
+                        print(bitfeat[-1]['feature'])
 
                 with open('grid/grid_{}_{}.json'.format(x, y), 'w') as fp:
                     json.dump(bitfeat, fp, indent=2)
