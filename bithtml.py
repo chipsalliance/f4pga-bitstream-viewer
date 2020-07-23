@@ -380,7 +380,7 @@ def run_dump_grid(db_dir, db_part, bits, output, grid_dir):
                         tmp = dict()
                         tmp['bitname'] = b['feature']['bit'][i]
                         tmp['feature'] = b['feature']['feature']
-                        
+
                         bitfeat.append(tmp)
                         print(bitfeat[-1]['feature'])
 
