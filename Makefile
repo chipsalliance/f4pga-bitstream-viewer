@@ -37,9 +37,6 @@ clean::
 
 # -------------------- BACKEND --------------------
 
-PART = xc7a35tcsg324-1
-#PART = xc7a50tfgg484-1
-
 PRJXRAY  ?= ..
 DATABASE = $(PRJXRAY)/database/artix7
 
