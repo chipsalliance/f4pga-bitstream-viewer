@@ -3,7 +3,9 @@ venv
 nenv
 node_modules
 *.bits
+*.frames
 *.json
+*.html
 __pycache__
 frames
 grid

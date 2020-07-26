@@ -72,5 +72,7 @@ bitstreamData.json: bitstream.bits bithtml.py grid/.dir frames/.dir
 		--bits=bitstream.bits \
 		--dump-grid=$@ --grid-dir=$$PWD/grid
 
+all:: bitstream.html
+
 clean::
 	rm -f bitstream.frames bitstream.bits bitstream.html bitstreamData.json
