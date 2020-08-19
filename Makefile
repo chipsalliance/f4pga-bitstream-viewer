@@ -38,6 +38,7 @@ clean::
 # -------------------- BACKEND --------------------
 
 PRJXRAY  ?= ..
+PART ?= xc7a35tcsg324-1
 DATABASE = $(PRJXRAY)/database/artix7
 
 bitstream.bits: $(BITSTREAM)
@@ -71,8 +72,6 @@ bitstreamData.json: bitstream.bits bithtml.py grid/.dir frames/.dir
 		--db-part=$(PART) \
 		--bits=bitstream.bits \
 		--dump-grid=$@ --grid-dir=$$PWD/grid
-
-all:: bitstream.html
 
 clean::
 	rm -f bitstream.frames bitstream.bits bitstream.html bitstreamData.json
