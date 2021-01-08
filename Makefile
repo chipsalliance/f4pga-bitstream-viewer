@@ -37,10 +37,8 @@ clean::
 
 # -------------------- BACKEND --------------------
 
-PART = xc7a35tcsg324-1
-#PART = xc7a50tfgg484-1
-
 PRJXRAY  ?= ..
+PART ?= xc7a35tcsg324-1
 DATABASE = $(PRJXRAY)/database/artix7
 
 bitstream.bits: $(BITSTREAM)
